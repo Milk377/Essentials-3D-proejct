@@ -11,6 +11,7 @@ public class GenericsSOC : MonoBehaviour
 
         myClass.GenericMethod<int>(5);
         myClass.GenericMethod<string>("Hello Generics");
+
     }
 
     // Update is called once per frame
