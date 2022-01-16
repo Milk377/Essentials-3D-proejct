@@ -4,31 +4,20 @@ using UnityEngine;
 
 public class ClickSetPosition : MonoBehaviour
 {
-    public float smoothing = 1.0f;
-    public Transform targetTrans;
+    public PropertiesAndCoroutines coroutineScript;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        StartCoroutine(MyCoroutine(targetTrans));
-        
-    }
 
-    IEnumerator MyCoroutine(Transform target)
+    void OnMouseDown()
     {
-        while(Vector3.Distance(transform.position,target.position) > 0.05f)
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        Physics.Raycast(ray, out hit);
+
+        if (hit.collider.gameObject == gameObject)
         {
-            transform.position = Vector3.Lerp(transform.position, target.position, smoothing * Time.deltaTime);
-
-            yield return null;
+            Vector3 newTarget = hit.point + new Vector3(0, 0.5f, 0);
+            coroutineScript.Target = newTarget;
         }
-
-        print("Reached the target");
-
-        yield return new WaitForSeconds(3.0f);
-        
-        print("Coroutine finish");
-
     }
-
 }
